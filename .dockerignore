@@ -1,0 +1,62 @@
+# Version control
+.git/
+.gitignore
+.svn/
+.hg/
+
+# Node.js dependencies and logs
+node_modules/
+npm-debug.log
+yarn-debug.log
+
+# Build outputs
+build/
+dist/
+out/
+
+# IDE/editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary and local files
+tmp/
+temp/
+*.tmp
+.local/
+local/
+
+# Test and debug files
+test/
+tests/
+debug/
+*.log
+
+# Environment and secrets
+.env*
+*.env
+*.pem
+*.key
+*.crt
+config.local.*
+*.local.yml
+
+# Documentation
+README*
+*.md
+docs/
+
+# Project-specific
+screenshot-for-readme.png
+
+# Frontend public assets (large images)
+frontend/public/screenshot-for-readme.png
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
+
+# Exclude Docker files
+Dockerfile*
+docker-compose*

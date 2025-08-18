@@ -1,36 +1,35 @@
-<h1 align="center">MERN Crash Course 🚀</h1>
+---
 
-![Demo App](/frontend/public/screenshot-for-readme.png)
+### Run this app with Docker 🐳
 
-[Video Tutorial on Youtube](https://youtu.be/Dukz-3mS3Us)
+This project includes Dockerfiles for both the backend and frontend, plus a `docker-compose.yml` for easy setup.
 
-About This Course:
+**Requirements:**
+- Docker & Docker Compose installed
+- Node.js version: `22.13.1` (used in containers)
 
--   ⚛️ Tech Stack: React.js, Node.js, Express.js, MongoDB, Chakra UI
--   🔥 Build an API
--   📱 Responsive UI With React.js and ChakraUI
--   🐞 Error Handling
--   🌐 Deployment
--   🚀 And Many More Cool Features
--   ✅ This is a lot of work. Support my work by subscribing to the [Channel](https://www.youtube.com/@asaprogrammer_)
+**Environment Variables:**
+- Backend requires a `.env` file in `./backend` with:
+  ```shell
+  MONGO_URI=your_mongo_uri
+  PORT=5000
+  ```
+- Frontend does not require environment variables by default
 
-### Setup .env file
-
-```shell
-MONGO_URI=your_mongo_uri
-PORT=5000
-```
-
-### Run this app locally
+**How to build and run:**
 
 ```shell
-npm run build
+docker compose up --build
 ```
 
-### Start the app
+**Services & Ports:**
+- **js-backend**: http://localhost:5000
+- **js-frontend**: http://localhost:4173
+- **mongo**: localhost:27017
 
-```shell
-npm run start
-```
+**Notes:**
+- The backend depends on MongoDB. Make sure your `MONGO_URI` points to the `mongo` service (e.g. `mongodb://mongo:27017/your-db-name`).
+- For persistent MongoDB data, uncomment the `volumes` section in `docker-compose.yml`.
+- All services run as non-root users for security.
 
-### I'll see you in the next one! 🚀
+---
