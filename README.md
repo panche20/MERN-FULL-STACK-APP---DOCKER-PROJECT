@@ -1,6 +1,7 @@
-# MERN Crash Course 🚀
+# Containerization of a MERN app. 🚀
 
-This project is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) application that has been containerized using Docker. The application allows users to view, create, update, and delete products.
+This project is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) application that has been containerized using Docker.
+The application allows users to view, create, update, and delete products.
 
 This project was built following a crash course video tutorial on YouTube.
 
@@ -20,7 +21,7 @@ This application uses Docker to containerize the entire MERN stack, including th
 
 1.  **Clone the repository and navigate to the project directory.**
     ```bash
-    git clone [https://github.com/panche20/MERN-FULL-STACK-APP---DOCKER-PROJECT.git](https://github.com/panche20/MERN-FULL-STACK-APP---DOCKER-PROJECT.git)
+    git clone https://github.com/panche20/MERN-FULL-STACK-APP---DOCKER-PROJECT.git
     cd MERN-FULL-STACK-APP---DOCKER-PROJECT
     ```
 
