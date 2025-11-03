@@ -1,21 +1,49 @@
-version: "3.8"
-
+version: '3.8' # Use a modern version for better features
 services:
   backend:
-    build: .
+    build:
+      context: .
     ports:
       - "5000:5000"
-    environment:
-      - MONGO_URI=mongodb://db:27017/mern-crash-course
-      - PORT=5000
+    env_file:
+      - ./.env
     depends_on:
       - db
-    command: ["npm", "start"]
+    restart: always
+
+    # Use healthchecks for more robust dependency management (optional, but highly recommended)
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"] # Replace with a better endpoint if available
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    
+    # You can remove the 'command' if your Dockerfile CMD is correct, but it's fine here
+    # command: ["npm", "start"] 
+
   db:
-    image: mongo
-    ports:
-      - "27017:27017"
+    # Use a specific, pinned version for stability, not just 'mongo' (latest)
+    image: mongo:6.0 # Example: pin to a major version
+    
+    # IMPORTANT: Remove the port mapping if you don't need to access MongoDB from your host machine.
+    # The 'backend' service can access 'db' on port 27017 internally without this.
+    # Removing it is a security best practice.
+    # ports:
+    #   - "27017:27017"
+    user: mongodb 
+    
+    # Ensure a robust restart policy
+    restart: always
+
     volumes:
+      # Named volume for persistent data
       - mongo-data:/data/db
+
 volumes:
+  # Define the named volume once
   mongo-data:
+    # Use driver_opts for performance tuning or specific storage needs (optional)
+    # driver_opts:
+    #   o: bind
+    #   type: none
+    #   device: /path/on/host/for/data

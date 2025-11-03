@@ -62,21 +62,43 @@ The following API endpoints are available:
 This file is used to build the main Docker image for the application.
 
 ```dockerfile
-# Stage 1: Build the frontend
-FROM node:18-alpine AS frontend-builder
-WORKDIR /app/frontend
-COPY frontend/package*.json ./
+# --- STAGE 1: Build Stage ---
+FROM node:20-slim AS builder
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json first to cache node_modules layer
+COPY package*.json ./
+
+# Install dependencies (including devDependencies for building)
 RUN npm install
-COPY frontend .
+
+# Copy the rest of the application source
+COPY . .
+
+# Build the frontend for production
+# Assuming 'npm run build' generates production assets
 RUN npm run build
 
-# Stage 2: Build the backend and serve the application
-FROM node:18-alpine
+# --- STAGE 2: Production Stage (Smaller runtime image) ---
+FROM node:20-slim AS final
+
+# Set the working directory
 WORKDIR /app
+
+# Copy only production dependencies (no devDependencies needed for runtime)
 COPY package*.json ./
-RUN npm install
-COPY backend ./backend
-COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
-ENV NODE_ENV=production
+RUN npm install --only=production
+
+# Alternative approach for dependencies (might be cleaner if you can reinstall prod-only):
+COPY package*.json ./
+RUN npm install --only=production
+COPY --from=builder /app .
+
+# Expose the port the app runs on
 EXPOSE 5000
-CMD ["node", "backend/server.js"]
+
+# Run the production start command
+CMD ["npm", "start"]
+```
