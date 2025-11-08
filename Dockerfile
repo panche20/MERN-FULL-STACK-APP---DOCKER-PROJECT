@@ -14,7 +14,6 @@ RUN npm install
 COPY . .
 
 # Build the frontend for production
-# Assuming 'npm run build' generates production assets
 RUN npm run build
 
 # --- STAGE 2: Production Stage (Smaller runtime image) ---
@@ -22,10 +21,6 @@ FROM node:20-slim AS final
 
 # Set the working directory
 WORKDIR /app
-
-# Copy only production dependencies (no devDependencies needed for runtime)
-COPY package*.json ./
-RUN npm install --only=production
 
 # Copy the built assets and the rest of the source from the builder stage
 COPY package*.json ./
